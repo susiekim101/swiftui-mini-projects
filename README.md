@@ -1,5 +1,19 @@
-# WeSplit
+# SwiftUI Mini Projects
 
-A simple SwiftUI application that allows users to input a check, party size, and tip percentage to evenly split the total cost among the number of people. 
-WeSplit utilizes @State, Form, and Picker properties to make the UI interactive, yet simple to use.
-This project follows the 100 Days of Swift curriculum, led and instructed by Paul Hudson.
+This repo contains small SwiftUI projects for learning and practice.
+
+## Projects
+
+| Project Name     | Description                      |
+|------------------|----------------------------------|
+| [WeSplit](./WeSplitApp) | Helps users split a bill with tip among a group |
+
+## Features
+### WeSplit
+- Input check amount, party size, and tip percentage
+- Calculate total per person
+- Uses SwiftUI components: '@State', 'Form', 'Picker'
+
+
+## Acknowledgements
+Projects in this repository were inspired by the [100 Days of SwiftUI] course (https://www.hackingwithswift.com/100/swiftui) by Paul Hudson.
