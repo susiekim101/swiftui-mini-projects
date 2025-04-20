@@ -9,7 +9,7 @@ This repo contains small SwiftUI projects for learning and practice.
 | [WeSplit](./WeSplitApp) | Helps users split a bill with tip among a group |
 | [ConversionApp](./ConversionApp) | Length unit converter |
 | [GuessTheFlag](./GuessTheFlagApp) | Game to select the correct country flag's image |
-| [RPSTraining] (./RPSTrainingApp) | Brain training game to select either a winning or losing opion |
+| [RPSTraining](./RPSTrainingApp) | Brain training game to select either a winning or losing opion |
 
 ## Features
 ### WeSplit
