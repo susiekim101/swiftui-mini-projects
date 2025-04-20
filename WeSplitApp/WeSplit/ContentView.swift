@@ -29,7 +29,7 @@ struct ContentView: View {
         return amountPerPerson
     }
     
-    var useRedText: Bool {
+    var zeroTip: Bool {
         if(tipPercentage == 0){
             return true
         }
@@ -67,7 +67,7 @@ struct ContentView: View {
                 Section("Amount per person") {
                     Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
-                .foregroundStyle(useRedText ? .red : .black)
+                .foregroundStyle(zeroTip ? .red : .black)
             }
             .navigationTitle("WeSplit")
             .toolbar {
