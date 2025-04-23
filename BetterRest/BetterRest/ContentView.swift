@@ -14,7 +14,7 @@ struct ContentView: View {
     @State private var coffeeAmount = 1
     
     @State private var alertTitle = ""
-    @State private var alertMessage = ""
+    @State private var alertMessage = "10:38 PM"
     @State private var showingAlert = false
     
     static var defaultWakeTime: Date {
@@ -26,40 +26,64 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("When do you want to wake up?")
-                        .font(.headline)
+            VStack {
+                Form {
+                    VStack(alignment: .center, spacing: 10) {
+                        Text("When do you want to wake up?")
+                            .font(.headline)
+                        
+                        DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+                            .onChange(of: wakeUp, calculateBedtime)
+                    }
+                    .frame(maxWidth: .infinity)
                     
-                    DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
+                    VStack(alignment: .center, spacing: 10) {
+                        Text("Desired amount of sleep")
+                            .font(.headline)
+                        
+                        Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+                            .padding(.horizontal, 30)
+                            .onChange(of: sleepAmount, calculateBedtime)
+                    }
+                    .frame(maxWidth: .infinity)
+                    
+                    VStack(alignment: .center, spacing: 10) {
+                        Text("Daily coffee intake")
+                            .font(.headline)
+                        
+                        Picker("^[\(coffeeAmount + 1) cup](inflect: true)", selection: $coffeeAmount) {
+                            ForEach(1..<21) {
+                                Text("\($0)")
+                            }
+                        }
+                        .padding(.horizontal, 30)
+                        .onChange(of: coffeeAmount, calculateBedtime)
+                    }
+                    
+                    Section {
+                        Text("Your suggested bedtime is ")
+                            .font(.headline)
+                        
+                        Text("\(alertMessage)")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                    }
+                    .frame(maxWidth: .infinity)
                 }
                 
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Desired amount of sleep")
-                        .font(.headline)
-                    
-                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
-                }
-                
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Daily coffee intake")
-                        .font(.headline)
-                    
-                    Stepper("^[\(coffeeAmount) cup](inflect: true)", value: $coffeeAmount, in: 1...20)
-                }
             }
             .navigationTitle("BetterRest")
-            .toolbar {
-                Button("Calculate", action: calculateBedtime)
-            }
-            .alert(alertTitle, isPresented: $showingAlert) {
-                Button("OK") { }
-            } message: {
-                Text(alertMessage)
-            }
         }
     }
+    /*.toolbar {
+     Button("Calculate", action: calculateBedtime)
+     }
+     .alert(alertTitle, isPresented: $showingAlert) {
+     Button("OK") { }
+     } message: {
+     Text(alertMessage)
+     }*/
     
     func calculateBedtime() {
         do {
