@@ -10,8 +10,8 @@ This repo contains small SwiftUI projects for learning and practice.
 | [Conversion](./ConversionApp) | Length unit converter |
 | [GuessTheFlag](./GuessTheFlagApp) | Game to select the correct country flag's image |
 | [RPSTraining](./RPSTrainingApp) | Brain training game to select either a winning or losing opion |
-| [BetterRest] (./BetterRest) | Calculates suggested sleep time depending on coffee intake |
-| [WordScramble] (./WordScrambleApp) | Score points by finding substrings of root word |
+| [BetterRest](./BetterRest) | Calculates suggested sleep time depending on coffee intake |
+| [WordScramble](./WordScrambleApp) | Score points by finding substrings of root word |
 
 ## Features
 ### WeSplit
