@@ -25,6 +25,8 @@ struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
     @State private var wrongAnswerText = ""
+    @State private var tappedButton: Int? = nil
+    @State private var animationAmount = 0.0
     
     @State private var numQuestions = 0
     @State private var finishedGame = false
@@ -56,10 +58,23 @@ struct ContentView: View {
                     
                     ForEach(0..<3) { number in
                         Button {
+                            tappedButton = number
+                            withAnimation(.easeInOut(duration: 0.6)) {
+                                animationAmount += 360
+                            }
                             flagTapped(number)
                         } label: {
                             Flag(num: number, countries: countries)
                         }
+                        .rotation3DEffect(
+                            .degrees(tappedButton == number ? animationAmount : 0),
+                            axis: (x: 0, y: 1, z: 0)
+                        )
+                        .opacity(tappedButton == nil ||
+                                 tappedButton == number ? 1 : 0.25)
+                        .scaleEffect(tappedButton == nil ||
+                                     tappedButton == number ? 1 : 0.75)
+                        .animation(.easeInOut(duration: 0.6), value: tappedButton)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -113,6 +128,10 @@ struct ContentView: View {
         if(numQuestions != 8) {
             countries.shuffle()
             correctAnswer = Int.random(in: 0...2)
+        }
+        withAnimation(nil) {
+            animationAmount = 0
+            tappedButton = nil
         }
     }
     
