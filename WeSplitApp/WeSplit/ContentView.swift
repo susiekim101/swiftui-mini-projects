@@ -69,6 +69,7 @@ struct ContentView: View {
                 }
                 .foregroundStyle(zeroTip ? .red : .black)
             }
+            
             .navigationTitle("WeSplit")
             .toolbar {
                 if amountIsFocused {
