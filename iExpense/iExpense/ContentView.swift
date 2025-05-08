@@ -35,16 +35,62 @@ class Expenses {
     }
 }
 
+struct expenseAmount: ViewModifier {
+    var amount: Double
+    
+    var color: Color {
+        if (amount < 50) {
+            return .green
+        } else if (amount < 100) {
+            return .yellow
+        } else if (amount < 500) {
+            return .orange
+        } else {
+            return .red
+        }
+    }
+    
+    func body(content: Content) -> some View {
+        content
+            .listRowBackground(color)
+    }
+}
+
+extension View {
+    func expenseStyle(amount: Double) -> some View {
+        modifier(expenseAmount(amount: amount))
+    }
+}
+
 struct ContentView: View {
     // New property to store Expenses class
     @State private var expenses = Expenses()
+    @State private var selectedCategory = 0
+    @State private var types = ["All", "Business", "Personal"]
     
     @State private var showingAddExpense = false
+    
+    var filterItems: [ExpenseItem] {
+        if(selectedCategory == 0) {
+            return expenses.items
+        } else if(selectedCategory == 1) {
+            return expenses.items.filter { $0.type == "Business" }
+        } else {
+            return expenses.items.filter { $0.type == "Personal" }
+        }
+    }
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expenses.items) { item in
+                Picker("Filter", selection: $selectedCategory) {
+                    ForEach(0..<types.count, id: \.self) { num in
+                        Text("\(types[num])")
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+                ForEach(filterItems) { item in
                     HStack {
                         VStack(alignment: .leading) {
                             Text(item.name)
@@ -53,8 +99,9 @@ struct ContentView: View {
                         }
                         
                         Spacer()
-                        Text(item.amount, format: .currency(code: "USD"))
+                        Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                     }
+                    .expenseStyle(amount: item.amount)
                 }
                 .onDelete(perform: removeItems)
             }
