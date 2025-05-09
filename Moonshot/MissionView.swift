@@ -15,6 +15,7 @@ struct MissionView: View {
     
     let mission: Mission
     let crew: [CrewMember]
+    let astronauts: [String: Astronaut]
     
     var body: some View {
         ScrollView {
@@ -25,12 +26,13 @@ struct MissionView: View {
                     .containerRelativeFrame(.horizontal) { width, axis in
                         width * 0.6
                     }
+        
+                Text(mission.formattedLaunchDate)
+                    .font(.title)
+                    .foregroundStyle(.white.opacity(0.8))
             
                 VStack(alignment: .leading) {
-                    Rectangle()
-                        .frame(height: 2)
-                        .foregroundStyle(.lightBackground)
-                        .padding(.vertical)
+                    Dividers()
                     
                     Text("Mission Highlights")
                         .font(.title.bold())
@@ -38,10 +40,7 @@ struct MissionView: View {
                     
                     Text(mission.description)
                     
-                    Rectangle()
-                        .frame(height: 2)
-                        .foregroundStyle(.lightBackground)
-                        .padding(.vertical)
+                    Dividers()
                     
                     Text("Crew")
                         .font(.title.bold())
@@ -51,35 +50,7 @@ struct MissionView: View {
             }
             .padding(.bottom)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(crew, id: \.role) { crewMember in
-                        NavigationLink {
-                            AstronautView(astronaut: crewMember.astronaut)
-                        } label: {
-                            HStack {
-                                Image(crewMember.astronaut.id)
-                                    .resizable()
-                                    .frame(width: 104, height: 72)
-                                    .clipShape(.capsule)
-                                    .overlay(
-                                        Capsule()
-                                            .strokeBorder(.white, lineWidth: 1)
-                                    )
-                                VStack(alignment: .leading) {
-                                    Text(crewMember.astronaut.name)
-                                        .foregroundStyle(.white)
-                                        .font(.headline)
-                                    Text(crewMember.role)
-                                        .foregroundStyle(.white.opacity(0.5))
-                                }
-                            }
-                            .padding(.horizontal)
-                            
-                        }
-                    }
-                }
-            }
+            CrewView(mission: mission, astronauts: astronauts)
         }
         .navigationTitle(mission.displayName)
         .navigationBarTitleDisplayMode(.inline)
@@ -89,7 +60,7 @@ struct MissionView: View {
     // Accepts entire astronauts dictionary, then maps through to extract only the astronauts in specific mission
     init(mission: Mission, astronauts: [String: Astronaut]) {
         self.mission = mission
-        
+        self.astronauts = astronauts
         self.crew = mission.crew.map { member in
             if let astronaut = astronauts[member.name] {
                 return CrewMember(role: member.role, astronaut: astronaut)

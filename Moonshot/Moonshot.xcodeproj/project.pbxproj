@@ -9,12 +9,20 @@
 /* Begin PBXBuildFile section */
 		EA5D17682DCD022300AB5399 /* MissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D17672DCD022300AB5399 /* MissionView.swift */; };
 		EA5D176A2DCD09F600AB5399 /* AstronautView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D17692DCD09F600AB5399 /* AstronautView.swift */; };
+		EA5D17812DCE52C400AB5399 /* CrewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D17802DCE52C400AB5399 /* CrewView.swift */; };
+		EA5D17832DCE572400AB5399 /* Dividers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D17822DCE572400AB5399 /* Dividers.swift */; };
+		EA5D17852DCE57C100AB5399 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D17842DCE57C100AB5399 /* GridLayout.swift */; };
+		EA5D17872DCE580700AB5399 /* ListLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5D17862DCE580700AB5399 /* ListLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EA5D17482DCC4ABA00AB5399 /* Moonshot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moonshot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA5D17672DCD022300AB5399 /* MissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionView.swift; sourceTree = "<group>"; };
 		EA5D17692DCD09F600AB5399 /* AstronautView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronautView.swift; sourceTree = "<group>"; };
+		EA5D17802DCE52C400AB5399 /* CrewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewView.swift; sourceTree = "<group>"; };
+		EA5D17822DCE572400AB5399 /* Dividers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dividers.swift; sourceTree = "<group>"; };
+		EA5D17842DCE57C100AB5399 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
+		EA5D17862DCE580700AB5399 /* ListLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -39,7 +47,11 @@
 		EA5D173F2DCC4ABA00AB5399 = {
 			isa = PBXGroup;
 			children = (
+				EA5D17862DCE580700AB5399 /* ListLayout.swift */,
+				EA5D17842DCE57C100AB5399 /* GridLayout.swift */,
+				EA5D17802DCE52C400AB5399 /* CrewView.swift */,
 				EA5D17672DCD022300AB5399 /* MissionView.swift */,
+				EA5D17822DCE572400AB5399 /* Dividers.swift */,
 				EA5D17692DCD09F600AB5399 /* AstronautView.swift */,
 				EA5D174A2DCC4ABA00AB5399 /* Moonshot */,
 				EA5D17492DCC4ABA00AB5399 /* Products */,
@@ -129,7 +141,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA5D17682DCD022300AB5399 /* MissionView.swift in Sources */,
+				EA5D17832DCE572400AB5399 /* Dividers.swift in Sources */,
+				EA5D17812DCE52C400AB5399 /* CrewView.swift in Sources */,
 				EA5D176A2DCD09F600AB5399 /* AstronautView.swift in Sources */,
+				EA5D17872DCE580700AB5399 /* ListLayout.swift in Sources */,
+				EA5D17852DCE57C100AB5399 /* GridLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
