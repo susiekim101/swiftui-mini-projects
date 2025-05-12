@@ -69,6 +69,7 @@ struct ContentView: View {
     @State private var types = ["All", "Business", "Personal"]
     
     @State private var showingAddExpense = false
+
     
     var filterItems: [ExpenseItem] {
         if(selectedCategory == 0) {
@@ -81,7 +82,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack() {
             List {
                 Picker("Filter", selection: $selectedCategory) {
                     ForEach(0..<types.count, id: \.self) { num in
@@ -107,12 +108,12 @@ struct ContentView: View {
             }
             .navigationTitle("iExpense")
             .toolbar {
-                Button("Add Expense", systemImage: "plus") {
-                    showingAddExpense = true
+                ToolbarItem (placement: .navigationBarTrailing) {
+                    NavigationLink(destination: AddView(expenses: expenses)) {
+                        Image(systemName: "plus")
+                    }
+                    
                 }
-            }
-            .sheet(isPresented: $showingAddExpense) {
-                AddView(expenses: expenses)
             }
         }
     }
