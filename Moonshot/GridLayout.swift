@@ -22,9 +22,7 @@ struct GridLayout: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(missions) { mission in
-                        NavigationLink {
-                            MissionView(mission: mission, astronauts: astronauts)
-                        } label: {
+                        NavigationLink(value: mission) {
                             VStack {
                                 // Resizable images that scale to fit with exact frame
                                 Image(mission.image)
@@ -51,7 +49,10 @@ struct GridLayout: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(.lightBackground)
                             )
-                        }
+                            // MissionView(mission: mission, astronauts: astronauts)
+                        } /*label: {
+                            
+                        }*/
                     }
                 }
                 .padding([.horizontal, .bottom])
@@ -59,6 +60,9 @@ struct GridLayout: View {
             .background(.darkBackground)
             // Prefer default darkmode
             .preferredColorScheme(.dark)
+            .navigationDestination(for: Mission.self) { mission in
+                MissionView(mission: mission, astronauts: astronauts)
+            }
         }
     }
 }

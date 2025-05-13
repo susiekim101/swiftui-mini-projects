@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-struct User: Codable {
-    let name: String
-    let address: Address
-}
-
-struct Address: Codable {
-    let street: String
-    let city: String
-}
-
 struct ContentView: View {
     @State private var showingGrid = true
     var layoutText: String {
