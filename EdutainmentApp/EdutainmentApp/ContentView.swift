@@ -7,28 +7,67 @@
 
 import SwiftUI
 
+func nextQuestion() {
+    
+}
 
 struct ContentView: View {
-    let selectedNumber: Int? = 2
-    let numQuestions: Int? = 5
-    let difficulty: Int? = 1
+    @Binding var selectedNumber: Int?
+    @Binding var numQuestions: Int
+    @Binding var difficulty: Int
     var difficultyRange = [5, 10, 15]
+    
+    @State private var answer = 0
+    @State private var randomNum: Int = 1
     
     
     var body: some View {
         NavigationStack {
-            Text("\(selectedNumber ?? 2)")
-                .font(.largeTitle)
-            
-            Text("\(Int.random(in: 1...difficultyRange[difficulty ?? 0]))")
-                .font(.largeTitle)
-        }
-        .toolbar {
-            Button("Settings", systemImage: "setting")
+            VStack {
+                Spacer()
+                VStack {
+                    Text("\(selectedNumber ?? 2)")
+                        .font(.largeTitle)
+                    HStack {
+                        Spacer()
+                        Spacer()
+                        Text("x")
+                            .font(.largeTitle)
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                    }
+                    
+                    Text("\(randomNum)")
+                        .font(.largeTitle)
+                    
+                    Rectangle()
+                        .frame(width: 150, height: 2)
+                }
+                HStack {
+                    TextField("Enter a number", value: $answer, format: .number)
+                        .keyboardType(.numberPad)
+                        .font(.system(size: 40))
+                        .frame(width: 150)
+                        .background(Color(.secondarySystemBackground))
+                        .textFieldStyle(.roundedBorder)
+                        .multilineTextAlignment(.center)
+                        .cornerRadius(12)
+                }
+                Spacer()
+                Spacer()
+            }
+            .toolbar {
+                ToolbarItem (placement: .topBarTrailing) {
+                    NavigationLink(destination: PreferencesView(selectedNumber: $selectedNumber, numQuestions: $numQuestions, difficulty: $difficulty)) {
+                        Image(systemName: "gearshape")
+                    }
+                }
+            }
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(selectedNumber: .constant(2), numQuestions: .constant(5), difficulty: .constant(1))
 }

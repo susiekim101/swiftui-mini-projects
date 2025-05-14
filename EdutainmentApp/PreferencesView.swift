@@ -39,61 +39,76 @@ struct ButtonGridView: View {
 }
 
 struct PreferencesView: View {
+    @Environment(\.dismiss) private var dismiss
+    
     var timesTable = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     var questions = [5, 10, 20]
-    var levelDifficuly = ["easy", "medium", "hard"]
-    @State private var selectedNumber: Int? = nil
-    @State private var numQuestions = 0;
-    @State private var difficulty = 0;
-    
+    var levelDifficulty = ["easy", "medium", "hard"]
+    @Binding var selectedNumber: Int?
+    @Binding var numQuestions: Int
+    @Binding var difficulty: Int
+    @State private var localSelectedNumber: Int? = nil
+    @State private var localNumQuestions: Int = 0
+    @State private var localDifficulty: Int = 0
     
     var body: some View {
         NavigationStack {
-            Spacer()
-            Spacer()
             VStack {
-                Text("Select Times Table")
-                    .font(.headline)
-                ButtonGridView(selectedNumber: $selectedNumber)
-            }
-            
-            Spacer()
-            VStack {
-                Text("Number of questions")
-                    .font(.headline)
-                Picker("Number of questions", selection: $numQuestions) {
-                    ForEach(0..<3) {
-                        Text("\(questions[$0])")
+                Spacer()
+                Spacer()
+                VStack {
+                    Text("Select Times Table")
+                        .font(.headline)
+                    ButtonGridView(selectedNumber: $localSelectedNumber)
+                }
+                
+                Spacer()
+                VStack {
+                    Text("Number of questions")
+                        .font(.headline)
+                    Picker("Number of questions", selection: $localNumQuestions) {
+                        ForEach(0..<questions.count, id: \.self) { index in
+                            Text("\(questions[index])")
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
+                
+                Spacer()
+                VStack {
+                    Text("Difficulty Level")
+                        .font(.headline)
+                    Picker("", selection: $localDifficulty) {
+                        ForEach(levelDifficulty.indices, id: \.self) { index in
+                            Text("\(levelDifficulty[index])")
+                        }
                     }
                 }
-                .pickerStyle(.segmented)
+                Spacer()
+                Spacer()
             }
-            
-            
-            Spacer()
-            VStack {
-                Text("Difficulty Level")
-                    .font(.headline)
-                Picker("", selection: $difficulty) {
-                    ForEach(0..<3) {
-                        Text("\(levelDifficuly[$0])")
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem (placement: .topBarTrailing) {
+                    Button("Done") {
+                        selectedNumber = localSelectedNumber
+                        numQuestions = localNumQuestions
+                        difficulty = localDifficulty
+                        dismiss()
                     }
                 }
             }
-            Spacer()
-            Spacer()
-            /*NavigationLink(destination: QuizView(selectedNumber: selectedNumber, numQuestions: numQuestions, difficulty: difficulty)) {
-                Text("Start")
-                    .frame(width: 150, height: 40)
-                    .background(.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }*/
-
         }
+    }
+    
+    init(selectedNumber: Binding<Int?>, numQuestions: Binding<Int>, difficulty: Binding<Int>) {
+        self._selectedNumber = selectedNumber
+        self._numQuestions = numQuestions
+        self._difficulty = difficulty
     }
 }
 
 #Preview {
-    PreferencesView()
+    PreferencesView(selectedNumber: .constant(2), numQuestions: .constant(1), difficulty: .constant(1))
 }
