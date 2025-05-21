@@ -31,7 +31,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Enter your input values") {
+                Section("Enter input values") {
                     TextField("\(inputUnit)", value: $inputNumber, format: .number.precision(.fractionLength(0...5)))
                         .keyboardType(.decimalPad)
                         .focused($inputIsFocused)
