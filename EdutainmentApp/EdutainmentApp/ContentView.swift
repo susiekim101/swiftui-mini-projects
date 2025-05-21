@@ -45,7 +45,7 @@ struct ContentView: View {
                         .frame(width: 150, height: 2)
                 }
                 HStack {
-                    TextField("Enter a number", value: $answer, format: .number)
+                    TextField("", value: $answer, format: .number)
                         .keyboardType(.numberPad)
                         .font(.system(size: 40))
                         .frame(width: 150)
