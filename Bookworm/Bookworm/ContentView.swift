@@ -17,7 +17,6 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            Text("Count: \(books.count)")
             List {
                 ForEach(books) { book in
                     NavigationLink(value: book) {
