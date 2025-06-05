@@ -23,7 +23,9 @@ struct CheckoutView: View {
                          .scaledToFit()
                 } placeholder: {
                     ProgressView()
+                        .accessibilityHidden(true)
                 }
+                .accessibilityRemoveTraits(.isImage)
                 .frame(height: 233)
                 
                 Text("Your total cost is \(order.cost, format: .currency(code: "USD"))")
