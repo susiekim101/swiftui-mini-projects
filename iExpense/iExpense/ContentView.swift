@@ -4,19 +4,28 @@
 //
 //  Created by Susie Kim on 5/2/25.
 //
-
+import SwiftData
 import SwiftUI
 
 // Name of item, category, cost as a double
-struct ExpenseItem: Identifiable, Codable {
+@Model
+class ExpenseItem {
     var id = UUID()
-    let name: String
-    let type: String
-    let amount: Double
+    var name: String
+    var type: String
+    var amount: Double
+    
+    init(id: UUID = UUID(), name: String, type: String, amount: Double) {
+        self.id = id
+        self.name = name
+        self.type = type
+        self.amount = amount
+    }
 }
 
-@Observable
+/*@Observable
 class Expenses {
+    @Query var items = [ExpenseItem]
     var items = [ExpenseItem]() {
         didSet {
             if let encoded = try? JSONEncoder().encode(items) {
@@ -33,7 +42,7 @@ class Expenses {
         }
         items = []
     }
-}
+}*/
 
 struct expenseAmount: ViewModifier {
     var amount: Double
@@ -64,20 +73,22 @@ extension View {
 
 struct ContentView: View {
     // New property to store Expenses class
-    @State private var expenses = Expenses()
+    // @State private var expenses = Expenses()
+    @Environment(\.modelContext) private var modelContext
+    @Query private var items: [ExpenseItem]
+    
     @State private var selectedCategory = 0
     @State private var types = ["All", "Business", "Personal"]
-    
     @State private var showingAddExpense = false
 
     
     var filterItems: [ExpenseItem] {
         if(selectedCategory == 0) {
-            return expenses.items
+            return items
         } else if(selectedCategory == 1) {
-            return expenses.items.filter { $0.type == "Business" }
+            return items.filter { $0.type == "Business" }
         } else {
-            return expenses.items.filter { $0.type == "Personal" }
+            return items.filter { $0.type == "Personal" }
         }
     }
     
@@ -103,13 +114,16 @@ struct ContentView: View {
                         Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                     }
                     .expenseStyle(amount: item.amount)
+                    .accessibilityElement()
+                    .accessibilityLabel(item.name)
+                    .accessibilityHint(item.cost)
                 }
                 .onDelete(perform: removeItems)
             }
             .navigationTitle("iExpense")
             .toolbar {
                 ToolbarItem (placement: .navigationBarTrailing) {
-                    NavigationLink(destination: AddView(expenses: expenses)) {
+                    NavigationLink(destination: AddView()) {
                         Image(systemName: "plus")
                     }
                     
@@ -119,7 +133,10 @@ struct ContentView: View {
     }
     
     func removeItems(at offsets: IndexSet) {
-        expenses.items.remove(atOffsets: offsets)
+        for index in offsets {
+            let item = filterItems[index]
+            modelContext.delete(item)
+        }
     }
 
 }
